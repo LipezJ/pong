@@ -45,6 +45,16 @@ def imprimir():
     os.system('cls')
     for i in range(len(area)):
         print(area[i], tablero[i])
+    print('puntos: ', puntos)
+
+#elegir una nueva caciila
+def random_():
+    tablero[actual[0]][actual[1]] = 0
+    inicio_fila = rn.randint(0, len(tablero)-1)
+    inicio_columna = (len(tablero[0])-1)//2
+
+    tablero[inicio_fila][inicio_columna] = 1
+    return [inicio_fila, inicio_columna]
 
 #funciones para el tablero
 #   buscar la "pelota"
@@ -84,10 +94,12 @@ def mover():
 
 #inicializando variables
 inicio_fila = rn.randint(0, len(tablero)-1)
-inicio_columna = rn.randint(0, len(tablero[0])-1)
+inicio_columna = (len(tablero[0])-1)//2
 
 tablero[inicio_fila][inicio_columna] = 1
 actual = [inicio_fila, inicio_columna]
+
+puntos = 0
 
 #bucle general
 while True:
@@ -105,12 +117,17 @@ while True:
     #ejecutar la funcion para saber cuantas posibilidades hay en el movimiento
     posibilidades = posibilidades_()
 
-    #escucha de tevlas
+    #escucha de teclas
     key, timeout = timedKey(allowCharacters='wdq', timeout=0.2)
 
     #   area
     #si se presiona 'q' se saldra del programa
     if key == 'q':
+        print(exit())
+    elif puntos < -1:
+        os.system('cls')
+        print('Perdiste!')
+        time.sleep(1.5)
         print(exit())
 
     #si se presiona una tecla procede a evaluar el movimiento
@@ -122,7 +139,11 @@ while True:
         elif key == 'd' and actual_area[1] < len(area)-1:
             mover()
         time.sleep(0.1)
-    
+
+    # volver a calcular la posicion de la raqueta para los rebotes
+    actual_area = [area.index('|')]
+    actual_area.append(actual_area[0]+1)
+
     #   tablero
     #primer movimiento
     if actual == anterior:
@@ -140,7 +161,21 @@ while True:
         nuevo = [actual[0] + nuevo[0], actual[1] + nuevo[1]]
     
     #rebotes
+    elif posibilidades == [1, 2] and not (actual_area[0] == actual[0] or actual_area[1] == actual[0]):
+        actual = random_()
+        puntos -= 1
+        time.sleep(0.5)
+        continue
+
     else:
+        if posibilidades == [1, 2]:
+            if actual_area[0] == actual[0]:
+                #0
+                tipo = 0
+            elif actual_area[1] == actual[0]:
+                #1
+                tipo = 3
+            puntos += 1
         tipo_ = movimientos__[tipo]
         posibilidades.remove(tipo_)
         nuevo = movimientos[posibilidades[0]]
