@@ -7,23 +7,24 @@ import time
 #variables
 #   generales
 tablero = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
 area = [0, 0, 0, 0, 0, 0, 0, '|', '|', 0, 0, 0, 0, 0, 0]
+area2 = [0, 0, 0, 0, 0, 0, 0, '|', '|', 0, 0, 0, 0, 0, 0]
 #   tablero
 movimientos = {
     0: [-1, -1], 1: [-1, 1], 
@@ -36,18 +37,40 @@ movimientos_ = {
 }
 movimientos__ = {0: 2, 1: 3, 2: 0, 3: 1}
 #   area
-movimientos_area = {'w': -1, 'd': 1}
+movimientos_area = {'w': -1, 'd': 1, 'k': -1, 'm': 1}
 
 
 #funciones generales
 #   imprimir
 def imprimir():
     os.system('cls')
+    print()
+    for i in range(len(tablero[0])+1):
+        print('x', end='')
+    print()
     for i in range(len(area)):
-        print(area[i], tablero[i])
-    print('puntos: ', puntos)
+        if area[i] == '|':
+            print(area[i], end='')
+        else:
+            print(' ', end='')
 
-#elegir una nueva caciila
+        for j in range(len(tablero[0])):
+            if tablero[i][j] == 1:
+                print('O', end='')
+            elif j == centro:
+                print('|', end='')
+            else:
+                print(' ', end='')
+        if area2[i] == '|':
+            print(area2[i], end='')
+        else:
+            print(' ', end='')
+        print()
+    for i in range(len(tablero[0])+1):
+        print('x', end='')
+    print()
+    print('puntos 1: ', puntos, 'puntos 2: ', puntos2)
+#   elegir una nueva caciila
 def random_():
     tablero[actual[0]][actual[1]] = 0
     inicio_fila = rn.randint(0, len(tablero)-1)
@@ -89,17 +112,28 @@ def mover():
     area[actual_area[1]] = 0  
     area[nuevo_area[0]] = '|'
     area[nuevo_area[1]] = '|'
+def mover2():
+    nuevo_area2 = [
+        actual_area2[0] + movimientos_area[key], 
+        actual_area2[1] + movimientos_area[key]
+    ]
+    area2[actual_area2[0]] = 0
+    area2[actual_area2[1]] = 0  
+    area2[nuevo_area2[0]] = '|'
+    area2[nuevo_area2[1]] = '|'
 
 # codigo
 
 #inicializando variables
+centro = (len(tablero[0])-1)//2
 inicio_fila = rn.randint(0, len(tablero)-1)
-inicio_columna = (len(tablero[0])-1)//2
+inicio_columna = centro
 
 tablero[inicio_fila][inicio_columna] = 1
 actual = [inicio_fila, inicio_columna]
 
 puntos = 0
+puntos2 = 0
 
 #bucle general
 while True:
@@ -107,6 +141,9 @@ while True:
     #calcular posicion de la raqueta
     actual_area = [area.index('|')]
     actual_area.append(actual_area[0]+1)
+
+    actual_area2 = [area2.index('|')]
+    actual_area2.append(actual_area2[0]+1)
     #calcular posicion de la pelota
     anterior = actual   
     actual = buscar_uno()
@@ -118,7 +155,7 @@ while True:
     posibilidades = posibilidades_()
 
     #escucha de teclas
-    key, timeout = timedKey(allowCharacters='wdq', timeout=0.2)
+    key, timeout = timedKey(allowCharacters='wdqkm', timeout=0.1)
 
     #   area
     #si se presiona 'q' se saldra del programa
@@ -126,7 +163,22 @@ while True:
         print(exit())
     elif puntos < -1:
         os.system('cls')
-        print('Perdiste!')
+        print('Perdiste! jugador 1')
+        time.sleep(1.5)
+        print(exit())
+    elif puntos2 < -1:
+        os.system('cls')
+        print('Perdiste! jugador 2')
+        time.sleep(1.5)
+        print(exit())
+    elif puntos == 10:
+        os.system('cls')
+        print('Ganaste! jugador 1')
+        time.sleep(1.5)
+        print(exit())
+    elif puntos2 == 10:
+        os.system('cls')
+        print('Ganaste! jugador 2')
         time.sleep(1.5)
         print(exit())
 
@@ -138,7 +190,13 @@ while True:
         #movimiento hacia abajo
         elif key == 'd' and actual_area[1] < len(area)-1:
             mover()
-        time.sleep(0.1)
+        #movimiento hacia arriba2
+        if key == 'k' and actual_area2[0] > 0:
+            mover2()
+        #movimiento hacia abajo2
+        elif key == 'm' and actual_area2[1] < len(area)-1:
+            mover2()
+        time.sleep(0.05)
 
     # volver a calcular la posicion de la raqueta para los rebotes
     actual_area = [area.index('|')]
@@ -163,7 +221,12 @@ while True:
     #rebotes
     elif posibilidades == [1, 2] and not (actual_area[0] == actual[0] or actual_area[1] == actual[0]):
         actual = random_()
-        puntos -= 1
+        puntos2 += 1
+        time.sleep(0.5)
+        continue
+    elif posibilidades == [0, 3] and not (actual_area2[0] == actual[0] or actual_area2[1] == actual[0]):
+        actual = random_()
+        puntos += 1
         time.sleep(0.5)
         continue
 
@@ -175,7 +238,13 @@ while True:
             elif actual_area[1] == actual[0]:
                 #1
                 tipo = 3
-            puntos += 1
+        if posibilidades == [0, 3]:
+            if actual_area2[0] == actual[0]:
+                #0
+                tipo = 1
+            elif actual_area2[1] == actual[0]:
+                #1
+                tipo = 2
         tipo_ = movimientos__[tipo]
         posibilidades.remove(tipo_)
         nuevo = movimientos[posibilidades[0]]
