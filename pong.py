@@ -21,10 +21,9 @@ tablero = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
-area = [0, 0, 0, 0, 0, 0, 0, '|', '|', 0, 0, 0, 0, 0, 0]
-area2 = [0, 0, 0, 0, 0, 0, 0, '|', '|', 0, 0, 0, 0, 0, 0]
+area = [0, 0, 0, 0, 0, 0, '|', '|', 0, 0, 0, 0, 0, 0]
+area2 = [0, 0, 0, 0, 0, 0, '|', '|', 0, 0, 0, 0, 0, 0]
 #   tablero
 movimientos = {
     0: [-1, -1], 1: [-1, 1], 
@@ -69,7 +68,7 @@ def imprimir():
     for i in range(len(tablero[0])+1):
         print('x', end='')
     print()
-    print('puntos 1: ', puntos, 'puntos 2: ', puntos2)
+    print('puntos: ', puntos, ' - ', puntos2)
 #   elegir una nueva caciila
 def random_():
     tablero[actual[0]][actual[1]] = 0
@@ -127,13 +126,11 @@ def mover2():
 #inicializando variables
 centro = (len(tablero[0])-1)//2
 inicio_fila = rn.randint(0, len(tablero)-1)
-inicio_columna = centro
 
-tablero[inicio_fila][inicio_columna] = 1
-actual = [inicio_fila, inicio_columna]
+tablero[inicio_fila][centro] = 1
+actual = [inicio_fila, centro]
 
-puntos = 0
-puntos2 = 0
+puntos, puntos2 = 0, 0
 
 #bucle general
 while True:
@@ -141,7 +138,6 @@ while True:
     #calcular posicion de la raqueta
     actual_area = [area.index('|')]
     actual_area.append(actual_area[0]+1)
-
     actual_area2 = [area2.index('|')]
     actual_area2.append(actual_area2[0]+1)
     #calcular posicion de la pelota
@@ -161,17 +157,9 @@ while True:
     #si se presiona 'q' se saldra del programa
     if key == 'q':
         print(exit())
-    elif puntos < -1:
-        os.system('cls')
-        print('Perdiste! jugador 1')
-        time.sleep(1.5)
-        print(exit())
-    elif puntos2 < -1:
-        os.system('cls')
-        print('Perdiste! jugador 2')
-        time.sleep(1.5)
-        print(exit())
-    elif puntos == 10:
+    
+    #puntos
+    if puntos == 10:
         os.system('cls')
         print('Ganaste! jugador 1')
         time.sleep(1.5)
@@ -184,23 +172,19 @@ while True:
 
     #si se presiona una tecla procede a evaluar el movimiento
     if not timeout:
-        #movimiento hacia arriba
-        if key == 'w' and actual_area[0] > 0:
+        #movimiento 1
+        if (key == 'w' and actual_area[0] > 0) or (key == 'd' and actual_area[1] < len(area)-1):
             mover()
-        #movimiento hacia abajo
-        elif key == 'd' and actual_area[1] < len(area)-1:
-            mover()
-        #movimiento hacia arriba2
-        if key == 'k' and actual_area2[0] > 0:
-            mover2()
-        #movimiento hacia abajo2
-        elif key == 'm' and actual_area2[1] < len(area)-1:
+        #movimiento 2
+        elif (key == 'k' and actual_area2[0] > 0) or (key == 'm' and actual_area2[1] < len(area)-1):
             mover2()
         time.sleep(0.05)
 
     # volver a calcular la posicion de la raqueta para los rebotes
     actual_area = [area.index('|')]
     actual_area.append(actual_area[0]+1)
+    actual_area2 = [area2.index('|')]
+    actual_area2.append(actual_area2[0]+1)
 
     #   tablero
     #primer movimiento
@@ -211,7 +195,19 @@ while True:
     
     #esquinas
     elif posibilidades[0] == 4:
-        nuevo = anterior
+        if actual[0] == actual_area[0] or actual[0] == actual_area[0] or actual_area[0] == actual[0] or actual_area[1] == actual[0]:
+            nuevo = anterior
+        elif not (actual_area[0] == actual[0] or actual_area[1] == actual[0]):
+            actual = random_()
+            puntos2 += 1
+            time.sleep(0.5)
+            continue
+        elif not (actual_area2[0] == actual[0] or actual_area2[1] == actual[0]):
+            actual = random_()
+            puntos += 1
+            time.sleep(0.5)
+            continue
+
 
     #movimientto normal
     elif len(posibilidades) == 4:
@@ -233,17 +229,13 @@ while True:
     else:
         if posibilidades == [1, 2]:
             if actual_area[0] == actual[0]:
-                #0
                 tipo = 0
             elif actual_area[1] == actual[0]:
-                #1
                 tipo = 3
         if posibilidades == [0, 3]:
             if actual_area2[0] == actual[0]:
-                #0
                 tipo = 1
             elif actual_area2[1] == actual[0]:
-                #1
                 tipo = 2
         tipo_ = movimientos__[tipo]
         posibilidades.remove(tipo_)
