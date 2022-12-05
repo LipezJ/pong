@@ -103,7 +103,7 @@ def main(stdscr):
             nuevo = [actual[0] + (movimientos[posibilidad][0]), actual[1] + (movimientos[posibilidad][0])]
         #esquinas
         elif posibilidades[0] == 4:
-            if actual[0] == actual_rows[0] or actual[0] == actual_rows[0] or actual_rows[0] == actual[0] or actual_rows[1] == actual[0]:
+            if actual[0] == actual_rows1[0] or actual[0] == actual_rows1[1] or actual_rows2[0] == actual[0] or actual_rows2[1] == actual[0]:
                 nuevo = anterior
             elif not (actual_rows1[0] == actual[0] or actual_rows1[1] == actual[0]):
                 nuevo = [rn.randint(0, tablero[0]-1), tablero[1]//2]
