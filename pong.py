@@ -15,9 +15,9 @@ def imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos):
             else:
                 stdscr.addstr(' ')
             if nuevo[0] == row:
-                stdscr.addstr((' '*(nuevo[1]-1)) + 'O' + ' '*(tablero[1]-(nuevo[1]+1)))
+                stdscr.addstr((' '*(nuevo[1])) + 'O' + ' '*(tablero[1]-(nuevo[1]+1)))
             else:
-                stdscr.addstr(' '*(tablero[1]-1))
+                stdscr.addstr(' '*(tablero[1]))
             if row == actual_rows2[0] or row == actual_rows2[1]:
                     stdscr.addstr('|')
             else:
@@ -131,6 +131,7 @@ def main(stdscr):
             if posibilidades == [1, 2]:
                 if actual_rows1[0] == actual[0]:
                     tipo = 0
+                    print(posibilidades)
                 elif actual_rows1[1] == actual[0]:
                     tipo = 3
             if posibilidades == [0, 3]:
@@ -140,6 +141,7 @@ def main(stdscr):
                     tipo = 2
             posibilidades.remove(movimientos__[tipo])
             nuevo = [actual[0] + movimientos[posibilidades[0]][0], actual[1] + movimientos[posibilidades[0]][1]]
+            print(nuevo)
 
         imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos)
         stdscr.refresh()
