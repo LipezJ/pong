@@ -69,11 +69,6 @@ def main(stdscr):
     while True:
         stdscr.clear()
 
-        #teclas
-        key, timeout = timedKey(allowCharacters='wdqkm', timeout=0.05, toprint=False)
-        if key == 'q':
-            print(exit())
-
         anterior = actual
         actual = nuevo
 
@@ -82,20 +77,26 @@ def main(stdscr):
         #ejecutar la funcion para saber cuantas posibilidades hay en el movimiento
         posibilidades = posibilidades_(actual)
 
+        #teclas
+        time_trans = time.time()
+        key, timeout = timedKey(allowCharacters='wdqkm', timeout=0.05, toprint=False)
+        if key == 'q' and not timeout:
+            print(exit())
+
         if not timeout:
             if (key == 'w' and actual_rows1[0]) > 0 or (key == 'd' and actual_rows1[1] < rows-1):
                 actual_rows1 = [ actual_rows1[0] + movimientos_area[key], actual_rows1[1] + movimientos_area[key]]
 
-            elif (key == 'k' and actual_rows2[0]) > 0 or (key == 'm' and actual_rows2[1] < rows-1):
+            if (key == 'k' and actual_rows2[0]) > 0 or (key == 'm' and actual_rows2[1] < rows-1):
                 actual_rows2 = [ actual_rows2[0] + movimientos_area[key], actual_rows2[1] + movimientos_area[key]]
-            time.sleep(0.01)
+            time.sleep((time.time() + 0.05) - time_trans)
 
         if 10 in puntos:
+            os.system('cls')
             if puntos[0] == 10: print(f'\n Ganaste! jugador 1 \n')
             else: print(f'\n Ganaste! jugador 2 \n')
             time.sleep(1)
             print(exit())
-            
 
         #primer movimiento
         if actual == anterior:
@@ -131,7 +132,6 @@ def main(stdscr):
             if posibilidades == [1, 2]:
                 if actual_rows1[0] == actual[0]:
                     tipo = 0
-                    print(posibilidades)
                 elif actual_rows1[1] == actual[0]:
                     tipo = 3
             if posibilidades == [0, 3]:
@@ -141,7 +141,6 @@ def main(stdscr):
                     tipo = 2
             posibilidades.remove(movimientos__[tipo])
             nuevo = [actual[0] + movimientos[posibilidades[0]][0], actual[1] + movimientos[posibilidades[0]][1]]
-            print(nuevo)
 
         imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos)
         stdscr.refresh()
