@@ -5,6 +5,7 @@ import curses
 from curses import wrapper
 from pytimedinput import timedKey
 
+TIME = 0.05
 
 def imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos):
     try:
@@ -65,6 +66,7 @@ def main(stdscr):
     nuevo = [rn.randint(0, tablero[0]-1), tablero[1]//2]
     actual = nuevo
     puntos = [0, 0]
+    timeout_count = 0
 
     while True:
         stdscr.clear()
@@ -79,17 +81,19 @@ def main(stdscr):
 
         #teclas
         time_trans = time.time()
-        key, timeout = timedKey(allowCharacters='wdqkm', timeout=0.05, toprint=False)
-        if key == 'q' and not timeout:
-            print(exit())
+        key, timeout = timedKey(allowCharacters='wdqkm', timeout=TIME, toprint=False)
 
         if not timeout:
-            if (key == 'w' and actual_rows1[0]) > 0 or (key == 'd' and actual_rows1[1] < rows-1):
+            timeout_count = time.time() - time_trans
+            if key == 'q':
+                print(exit())
+
+            if (key == 'w' and actual_rows1[0] > 0) or (key == 'd' and actual_rows1[1] < rows-1):
                 actual_rows1 = [ actual_rows1[0] + movimientos_area[key], actual_rows1[1] + movimientos_area[key]]
 
-            if (key == 'k' and actual_rows2[0]) > 0 or (key == 'm' and actual_rows2[1] < rows-1):
+            if (key == 'k' and actual_rows2[0] > 0) or (key == 'm' and actual_rows2[1] < rows-1):
                 actual_rows2 = [ actual_rows2[0] + movimientos_area[key], actual_rows2[1] + movimientos_area[key]]
-            time.sleep((time.time() + 0.05) - time_trans)
+            time.sleep(timeout_count - (timeout_count - TIME))
 
         if 10 in puntos:
             os.system('cls')
