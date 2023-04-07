@@ -14,13 +14,15 @@ using namespace std;
 
 int tablero[2] = {10, 30};
 
-int movimientos[4][2] = {{-1,-1},{-1,1},{1,1},{1,-1}};
-int movimientos__[4] = {2, 3, 0, 1};
+int movimientos[6][2] = {{-1,-1},{-1,1},{1,1},{1,-1},{0,2},{0,-2}};
+int movimientos__[6] = {2, 3, 0, 1, 5, 4};
 
+vector<vector<int>> movimientos_recto = {{0,3,5},{1,2,4}};
 map<vector<int>, int> movimientos_ = {
     {{-1,-1}, 0}, {{-1,1}, 1},
     {{1,-1}, 3}, {{1,1}, 2},
-    {{0,0}, 4}
+    {{0,2}, 4},{{0,-2}, 5},
+    {{0,0}, 6}
 };
 map<int, int> movimientos_area = {
     {119, -1}, {100, 1},
@@ -30,6 +32,7 @@ map<int, int> movimientos_area = {
 int timed_input();
 vector<int> posibilidades_(vector<int> &actual);
 void reinicio(vector<int> &nuevo, vector<int> &actual);
+void tipo_rebote(int &recto, vector<int> &movimientos_recto, int &tipo, vector<int> &posibilidades);
 void imprimir(vector<int> &actual, vector<int> &puntos, vector<int> &actual1, vector<int> &actual2);
 
 int main() {
@@ -43,7 +46,7 @@ int main() {
     vector<int> puntos = {0, 0};
     vector<int> posibilidades;
 
-    int tipo, key, posibilidad;
+    int tipo, key, posibilidad, recto_;
 
     system("cls");
 
@@ -59,7 +62,7 @@ int main() {
         key = timed_input();
         if (key == 113) {
             return 0;
-        }else if (key == 112) system("pause>nul");
+        } else if (key == 112) system("pause>nul");
         if ((key == 119 && actual_rows1[0] > 0) || (key == 100 && actual_rows1[1] < tablero[0])){
             actual_rows1[0] = actual_rows1[0] + movimientos_area[key];
             actual_rows1[1] = actual_rows1[1] + movimientos_area[key];
@@ -104,23 +107,24 @@ int main() {
         else if (posibilidades.size() == 4){
             nuevo[0] = actual[0] + (actual[0] - anterior[0]);
             nuevo[1] = actual[1] + (actual[1] - anterior[1]);
-            Sleep(0);
         } 
             //movimiento con pared
-        else if (posibilidades == vector<int>{1,2} && !(actual_rows1[0] == actual[0] || actual_rows1[1] == actual[0])){
+        else if (posibilidades == vector<int>{1,2,4} && !(actual_rows1[0] == actual[0] || actual_rows1[1] == actual[0])){
             reinicio(nuevo, actual);
             puntos[1] ++;
-        } else if (posibilidades == vector<int>{0,3} && !(actual_rows2[0] == actual[0] || actual_rows2[1] == actual[0])){
+        } else if (posibilidades == vector<int>{0,3,5} && !(actual_rows2[0] == actual[0] || actual_rows2[1] == actual[0])){
             reinicio(nuevo, actual);
             puntos[0] ++;
         }
             //rebotes
         else {
-            if (posibilidades == vector<int>{1,2}){
-                tipo = vector<int>{0, 3}[rand() % 2];
+            if (posibilidades == vector<int>{1,2,4} && (actual_rows1[0] == actual[0] || actual_rows1[1] == actual[0])){
+                tipo_rebote(recto_, movimientos_recto[0], tipo, posibilidades);
+                movimientos_recto[0] = {0,3,5};
             }
-            if (posibilidades == vector<int>{0,3}){
-                tipo = vector<int>{1, 2}[rand() % 2];
+            if (posibilidades == vector<int>{0,3,5} && (actual_rows2[0] == actual[0] || actual_rows2[1] == actual[0])){
+                tipo_rebote(recto_, movimientos_recto[1], tipo, posibilidades);
+                movimientos_recto[1] = {1,2,4};
             }
             posibilidades.erase(remove(posibilidades.begin(), posibilidades.end(), movimientos__[tipo]), posibilidades.end());
             nuevo[0] = actual[0] + movimientos[posibilidades[0]][0];
@@ -141,9 +145,9 @@ vector<int> posibilidades_(vector<int> &actual){
     } else if (actual[0] == 0){
         return vector<int>{2, 3};
     } else if (actual[1] == tablero[1]){
-        return vector<int>{0, 3};
+        return vector<int>{0, 3, 5};
     } else if (actual[1] == 0){
-        return vector<int>{1, 2};
+        return vector<int>{1, 2, 4};
     } else {
         return vector<int>{0, 1, 2, 3};
     }
@@ -152,9 +156,7 @@ vector<int> posibilidades_(vector<int> &actual){
 //input de teclas
 int timed_input(){
     int key = 0;
-	if (_kbhit()){
-		key = _getch();
-	}
+	if (_kbhit()) key = _getch();
 	return key;
 }
 
@@ -164,6 +166,14 @@ void reinicio(vector<int> &nuevo, vector<int> &actual){
     nuevo[1] = tablero[1] / 2;
     actual = nuevo;
     Sleep(200);
+}
+
+// tipo de rebote
+void tipo_rebote(int &recto, vector<int> &movimientos_recto, int &tipo, vector<int> &posibilidades){
+    recto = movimientos_recto[rand() % 3];
+    movimientos_recto.erase(remove(movimientos_recto.begin(), movimientos_recto.end(), recto), movimientos_recto.end());
+    tipo = movimientos_recto[rand() % 2];
+    posibilidades.erase(remove(posibilidades.begin(), posibilidades.end(), movimientos__[recto]), posibilidades.end());
 }
 
 //imprimir tablero
