@@ -45,7 +45,7 @@ def posibilidades_(actual):
         posibilidades_ = [0,1,2,3]
     return posibilidades_
 
-tablero = [15, 50]
+tablero = [10, 19]
 rows = tablero[0]
 movimientos = {
     0: [-1, -1], 1: [-1, 1], 
@@ -95,7 +95,7 @@ def main(stdscr):
                 actual_rows2 = [ actual_rows2[0] + movimientos_area[key], actual_rows2[1] + movimientos_area[key]]
             time.sleep(timeout_count - (timeout_count - TIME))
 
-        if 10 in puntos:
+        if 30 in puntos:
             os.system('cls')
             if puntos[0] == 10: print(f'\n Ganaste! jugador 1 \n')
             else: print(f'\n Ganaste! jugador 2 \n')
@@ -107,10 +107,10 @@ def main(stdscr):
             posibilidad = rn.choice(posibilidades)
             nuevo = [actual[0] + (movimientos[posibilidad][0]), actual[1] + (movimientos[posibilidad][0])]
         #esquinas
-        elif posibilidades[0] == 4:
-            if actual[0] == actual_rows1[0] or actual[0] == actual_rows1[1] or actual_rows2[0] == actual[0] or actual_rows2[1] == actual[0]:
+        elif len(posibilidades) == 1:
+            if ((actual[0] == actual_rows1[0] or actual[0] == actual_rows1[1]) and tipo in [0,3]) or ((actual_rows2[0] == actual[0] or actual_rows2[1] == actual[0]) and tipo in [1,2]):
                 nuevo = anterior
-            elif not (actual_rows1[0] == actual[0] or actual_rows1[1] == actual[0]):
+            elif not (actual[0] == actual_rows1[0] or actual[0] == actual_rows1[1]):
                 nuevo = [rn.randint(0, tablero[0]-1), tablero[1]//2]
                 actual = nuevo
                 puntos[1] += 1
@@ -118,7 +118,7 @@ def main(stdscr):
                 nuevo = [rn.randint(0, tablero[0]-1), tablero[1]//2]
                 actual = nuevo
                 puntos[0] += 1
-        #movimientto normal
+        #movimiento normal
         elif len(posibilidades) == 4:
             nuevo = [actual[0] + (actual[0] - anterior[0]), actual[1] + (actual[1] - anterior[1])]
 
