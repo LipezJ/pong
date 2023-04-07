@@ -8,11 +8,11 @@
 #include <algorithm>
 #include <string>
 
-#define TIME 100
+#define TIME 50
 
 using namespace std;
 
-int tablero[2] = {15, 40};
+int tablero[2] = {10, 30};
 
 int movimientos[4][2] = {{-1,-1},{-1,1},{1,1},{1,-1}};
 int movimientos__[4] = {2, 3, 0, 1};
@@ -28,9 +28,9 @@ map<int, int> movimientos_area = {
 };
 
 int timed_input();
-vector<int> posibilidades_(vector<int> actual);
+vector<int> posibilidades_(vector<int> &actual);
 void reinicio(vector<int> &nuevo, vector<int> &actual);
-void imprimir(vector<int> actual, vector<int> puntos, vector<int> actual1, vector<int> actual2);
+void imprimir(vector<int> &actual, vector<int> &puntos, vector<int> &actual1, vector<int> &actual2);
 
 int main() {
     srand(time(NULL));
@@ -117,20 +117,11 @@ int main() {
             //rebotes
         else {
             if (posibilidades == vector<int>{1,2}){
-                if (actual_rows1[0] == actual[0]) {
-                    tipo = 0;
-                } else if (actual_rows1[1] == actual[0]) {
-                    tipo = 3;
-                }
+                tipo = vector<int>{0, 3}[rand() % 2];
             }
             if (posibilidades == vector<int>{0,3}){
-                if (actual_rows2[0] == actual[0]) {
-                    tipo = 1;
-                } else if (actual_rows2[1] == actual[0]) {
-                    tipo = 2;
-                }
+                tipo = vector<int>{1, 2}[rand() % 2];
             }
-            Sleep(0);
             posibilidades.erase(remove(posibilidades.begin(), posibilidades.end(), movimientos__[tipo]), posibilidades.end());
             nuevo[0] = actual[0] + movimientos[posibilidades[0]][0];
             nuevo[1] = actual[1] + movimientos[posibilidades[0]][1];
@@ -141,7 +132,7 @@ int main() {
 }
 
 //calcular posibilidades
-vector<int> posibilidades_(vector<int> actual){
+vector<int> posibilidades_(vector<int> &actual){
     if ((actual[0] == 0 && actual[1] == 0) || (actual[0] == 0 && actual[1] == tablero[1]) || (actual[0] == tablero[0] && actual[1] == 0) || (actual[0] == tablero[0] && actual[1] == tablero[1])){
         return vector<int>{4};
     }
@@ -176,7 +167,7 @@ void reinicio(vector<int> &nuevo, vector<int> &actual){
 }
 
 //imprimir tablero
-void imprimir(vector<int> actual, vector<int> puntos, vector<int> actual1, vector<int> actual2){
+void imprimir(vector<int> &actual, vector<int> &puntos, vector<int> &actual1, vector<int> &actual2){
     printf("\x1b[0;0H");
     for (int i = 0; i < tablero[1]+3; i++) cout<<"x";
     cout<<"\n";

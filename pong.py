@@ -31,19 +31,18 @@ def imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos):
         print('', end='')
 
 def posibilidades_(actual):
+    if actual[0] == tablero[0]-1:
+        return [0, 1]
+    elif actual[0] == 0:
+        return [2, 3]
+    elif actual[1] == tablero[1]-1:
+        return [0, 3]
+    elif actual[1] == 0:
+        return [1, 2]
+    else:
+        return [0,1,2,3]
     if (actual[0] == 0 and actual[1] == 0) or (actual[0] == 0 and actual[1] == tablero[1]-1) or (actual[0] == tablero[0]-1 and actual[1] == 0) or (actual[0] == tablero[0]-1 and actual[1] == tablero[1]-1):
         return [4]
-    if actual[0] == tablero[0]-1:
-        posibilidades_ = [0, 1]
-    elif actual[0] == 0:
-        posibilidades_ = [2, 3]
-    elif actual[1] == tablero[1]-1:
-        posibilidades_ = [0, 3]
-    elif actual[1] == 0:
-        posibilidades_ = [1, 2]
-    else:
-        posibilidades_ = [0,1,2,3]
-    return posibilidades_
 
 tablero = [10, 19]
 rows = tablero[0]
@@ -134,15 +133,11 @@ def main(stdscr):
         #rebotes
         else:
             if posibilidades == [1, 2]:
-                if actual_rows1[0] == actual[0]:
-                    tipo = 0
-                elif actual_rows1[1] == actual[0]:
-                    tipo = 3
+                if actual_rows1[0] == actual[0] or actual_rows1[1] == actual[0]:
+                    tipo = rn.choice([0,3])
             if posibilidades == [0, 3]:
-                if actual_rows2[0] == actual[0]:
-                    tipo = 1
-                elif actual_rows2[1] == actual[0]:
-                    tipo = 2
+                if actual_rows2[0] == actual[0] or actual_rows2[1] == actual[0]:
+                    tipo = rn.choice([1,2])
             posibilidades.remove(movimientos__[tipo])
             nuevo = [actual[0] + movimientos[posibilidades[0]][0], actual[1] + movimientos[posibilidades[0]][1]]
 
