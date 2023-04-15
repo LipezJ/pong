@@ -40,10 +40,16 @@ movimientos_ = {
 movimientos__ = [2,3,0,1,5,4]
 movimientos_area = {'w': -1, 'd': 1, 'k': -1, 'm': 1}
 movimiento_recto = [[0,3,5],[1,2,4]]
+puntos_g = [0, 0]
 
 def start():
     os.system('cls')
     print(MENSAJE)
+    if sum(puntos_g) > 0:
+        print(f'Victorias: {puntos_g[0]} - {puntos_g[1]}\n')
+    else:
+        print('jugador 1: w, d')
+        print(f'jugador 2: k, m\n')
     print('(ctrl + c para salir)')
     input('Presiona enter para comenzar ')
     os.system('cls')
@@ -128,10 +134,14 @@ def main(stdscr):
                 actual_rows2 = [ actual_rows2[0] + movimientos_area[key], actual_rows2[1] + movimientos_area[key]]
             time.sleep(timeout_count - (timeout_count - TIME))
 
-        if 10 in puntos:
+        if 1 in puntos:
             os.system('cls')
-            if puntos[0] == 10: print()(f'\n Ganaste! jugador 1 \n')
-            else: print(f'\n Ganaste! jugador 2 \n')
+            if puntos[0] == 10: 
+                print()(f'\n Ganaste! jugador 1 \n')
+                puntos_g[0] += 1
+            else: 
+                print(f'\n Ganaste! jugador 2 \n')
+                puntos_g[1] += 1
             break
 
         #primer movimiento
@@ -177,9 +187,7 @@ def main(stdscr):
         imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos)
         stdscr.refresh()
 
-try: 
-    while True: 
-        start()
-        wrapper(main)
-except: 
-    print(exit())
+while True: 
+    start()
+    wrapper(main)
+    curses.endwin()
