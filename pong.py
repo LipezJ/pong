@@ -134,7 +134,7 @@ def main(stdscr):
                 actual_rows2 = [ actual_rows2[0] + movimientos_area[key], actual_rows2[1] + movimientos_area[key]]
             time.sleep(timeout_count - (timeout_count - TIME))
 
-        if 1 in puntos:
+        if 10 in puntos:
             os.system('cls')
             if puntos[0] == 10: 
                 print()(f'\n Ganaste! jugador 1 \n')
