@@ -7,6 +7,47 @@ from pytimedinput import timedKey
 
 TIME = 0.05
 
+MENSAJE = """
+        __________    ____________  _____    _____  ____________
+       |          \  /            \|     \  |     |/	        \\
+       |     __    \|     ____     |      \ |     |      ___     |
+       |    |  \    |    /    \    |       \|     |     /   \____|
+       |    |   |   |    |    |    |              |    |  ______
+       |    |__/    |    |    |    |              |    | |      \\
+       |           /|    |    |    |              |    | |__     |
+       |     _____/ |    |    |    |              |    |    |    |
+       |    |       |    \____/    |     |\       |     \__/     | 
+       |    |       |              |     | \      |              |
+       |____|        \____________/|_____|  \_____|\____________/
+
+								@lipezj
+								@Lpe_47
+"""
+
+tablero = [10, 26]
+rows = tablero[0]
+movimientos = {
+    0: [-1, -1], 1: [-1, 1], 
+    2: [1, 1], 3: [1, -1],
+    4: [0, 1], 5: [0, -1]
+}
+movimientos_ = {
+    "-1-1": 0, "-11": 1,
+    "1-1": 3, "11": 2,
+    "01": 4, "0-1": 5,
+    "00":6
+}
+movimientos__ = [2,3,0,1,5,4]
+movimientos_area = {'w': -1, 'd': 1, 'k': -1, 'm': 1}
+movimiento_recto = [[0,3,5],[1,2,4]]
+
+def start():
+    os.system('cls')
+    print(MENSAJE)
+    print('(ctrl + c para salir)')
+    input('Presiona enter para comenzar ')
+    os.system('cls')
+
 def imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos):
     try:
         stdscr.addstr('x'*(tablero[1]+1) + f'\n')
@@ -44,22 +85,12 @@ def posibilidades_(actual):
     else:
         return [0,1,2,3]
 
-tablero = [10, 19]
-rows = tablero[0]
-movimientos = {
-    0: [-1, -1], 1: [-1, 1], 
-    2: [1, 1], 3: [1, -1],
-    4: [0, 1], 5: [0, -1]
-}
-movimientos_ = {
-    "-1-1": 0, "-11": 1,
-    "1-1": 3, "11": 2,
-    "01": 4, "0-1": 5,
-    "00":6
-}
-movimientos__ = [2,3,0,1,5,4]
-movimientos_area = {'w': -1, 'd': 1, 'k': -1, 'm': 1}
-movimiento_recto = [[0,3,5],[1,2,4]]
+def rebote_pared(tipo, tipo_, posibilidades):
+    tipo__ = rn.choice(tipo_)
+    tipo_.remove(tipo__)
+    tipo = rn.choice(tipo_)
+    posibilidades.remove(movimientos__[tipo__])
+    return tipo
 
 def main(stdscr):
 
@@ -97,12 +128,11 @@ def main(stdscr):
                 actual_rows2 = [ actual_rows2[0] + movimientos_area[key], actual_rows2[1] + movimientos_area[key]]
             time.sleep(timeout_count - (timeout_count - TIME))
 
-        if 30 in puntos:
+        if 10 in puntos:
             os.system('cls')
-            if puntos[0] == 10: print(f'\n Ganaste! jugador 1 \n')
+            if puntos[0] == 10: print()(f'\n Ganaste! jugador 1 \n')
             else: print(f'\n Ganaste! jugador 2 \n')
-            time.sleep(1)
-            print(exit())
+            break
 
         #primer movimiento
         if actual == anterior:
@@ -136,19 +166,10 @@ def main(stdscr):
         #rebotes
         else:
             if (actual_rows1[0] == actual[0] or actual_rows1[1] == actual[0]) and posibilidades == [1, 2, 4]:
-                tipo_ = [0,3,5]
-                tipo__ = rn.choice(tipo_)
-                tipo_.remove(tipo__)
-                tipo = rn.choice(tipo_)
-                posibilidades.remove(movimientos__[tipo__])
-                print(tipo)
+                tipo = rebote_pared(tipo, [0,3,5], posibilidades)
+                
             if (actual_rows2[0] == actual[0] or actual_rows2[1] == actual[0]) and posibilidades == [0, 3, 5]:
-                print('der')
-                tipo_ = [1,2,4]
-                tipo__ = rn.choice(tipo_)
-                tipo_.remove(tipo__)
-                tipo = rn.choice(tipo_)
-                posibilidades.remove(movimientos__[tipo__])
+                tipo = rebote_pared(tipo, [1,2,4], posibilidades)
                     
             posibilidades.remove(movimientos__[tipo])
             nuevo = [actual[0] + movimientos[posibilidades[0]][0], actual[1] + movimientos[posibilidades[0]][1]]
@@ -156,4 +177,9 @@ def main(stdscr):
         imprimir_tablero(stdscr, nuevo, actual_rows1, actual_rows2, puntos)
         stdscr.refresh()
 
-wrapper(main)
+try: 
+    while True: 
+        start()
+        wrapper(main)
+except: 
+    print(exit())
